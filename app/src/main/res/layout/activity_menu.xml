@@ -3,20 +3,23 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
-
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtHelloWorld" />
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Menu">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Text"
-        android:id="@+id/btnChangeText"
+        android:text="New Season"
+        android:id="@+id/btnNewSeason"
+        android:nestedScrollingEnabled="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load Season"
+        android:id="@+id/btnLoadSeason"
         android:nestedScrollingEnabled="false"
-        android:layout_below="@+id/txtHelloWorld"
-        android:layout_toRightOf="@+id/txtHelloWorld"
-        android:layout_toEndOf="@+id/txtHelloWorld" />
+        android:layout_below="@+id/btnNewSeason"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

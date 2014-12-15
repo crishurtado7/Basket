@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SeasonsSQLiteHelper extends SQLiteOpenHelper {
 
     //SQL Sentence to create the table of Seasons
-    String sqlCreate = "CREATE TABLE Seasons (teamId INT, year INT, totalMatches INT, totalWins INT)";
+    String sqlCreate = "CREATE TABLE Seasons (id INTEGER PRIMARY KEY, teamId INT, year INT, totalMatches INT, totalWins INT)";
 
     public SeasonsSQLiteHelper(Context contexto, String nombre,
                                SQLiteDatabase.CursorFactory factory, int version) {
