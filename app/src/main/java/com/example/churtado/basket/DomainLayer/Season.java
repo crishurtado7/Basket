@@ -24,6 +24,9 @@ public class Season {
 
     private String teamName;
 
+    private static final Season season = new Season();
+    public static Season getInstance() {return season;}
+
     public Season() {
         this.seasonId = 0;
         this.teamId = 0;

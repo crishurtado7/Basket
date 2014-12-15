@@ -2,6 +2,7 @@ package com.example.churtado.basket.UILayer;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class MainMenu extends ActionBarActivity {
 
-    Season season = new Season();
+    Season season = Season.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class MainMenu extends ActionBarActivity {
         btnLoadSeason.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
                  //Modal with all the seasons stored
-                 final List<Season> seasonsList = new Season().getAllSeasons(MainMenu.this);
+                 final List<Season> seasonsList = Season.getInstance().getAllSeasons(MainMenu.this);
                  String[] seasonsNames = new String[seasonsList.size()];
                  for(int i = 0; i < seasonsList.size(); ++i)
                      seasonsNames[i] = seasonsList.get(i).getTeamName() + " - " + seasonsList.get(i).getYear();
@@ -69,6 +70,8 @@ public class MainMenu extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Load the selected season
                                 season.loadSeason(MainMenu.this, seasonsList.get(which).getSeasonId());
+                                Intent i = new Intent(getApplicationContext(), SeasonMenu.class);
+                                startActivity(i);
                             }
                  }).show();
              }

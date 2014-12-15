@@ -25,6 +25,21 @@
         <activity
             android:name=".UILayer.Game"
             android:label="@string/title_activity_game"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".UILayer.SeasonMenu"
+            android:label="@string/title_activity_season_menu"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".UILayer.EditTeam"
+            android:label="@string/title_activity_edit_team"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".UILayer.GameConfig"
+            android:label="@string/title_activity_game_config"
             android:screenOrientation="landscape">
         </activity>
     </application>
