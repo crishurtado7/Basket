@@ -139,7 +139,7 @@ public class EditTeam extends ActionBarActivity {
 
         //Create a new button to add new players
         //TODO:Check that the user enters the number and the name
-        //TODO:Check that the number is only ints and name only numbers
+        //TODO:Check that the number is only integers and name only numbers
         TableRow tbrNewPlayer = new TableRow(this);
         final Button btnAddPlayer = new Button(this);
         btnAddPlayer.setText("Add Player");

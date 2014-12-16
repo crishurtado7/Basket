@@ -18,11 +18,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UILayer.Stats"
-            android:label="@string/title_activity_stats"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
             android:name=".UILayer.Game"
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape" >
