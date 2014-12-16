@@ -1,5 +1,6 @@
 package com.example.churtado.basket.DomainLayer;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +24,13 @@ public class Player {
         this.teamId = 0;
         this.numPlayer = 0;
         this.namePlayer = "";
+    }
+
+    public Player(int teamId, int numPlayer, String namePlayer) {
+        this.playerId = 0;
+        this.teamId = teamId;
+        this.numPlayer = numPlayer;
+        this.namePlayer = namePlayer;
     }
 
     public Player(int playerId, int teamId, int numPlayer, String namePlayer) {
@@ -56,12 +64,58 @@ public class Player {
         this.namePlayer = namePlayer;
     }
 
-    public void savePlayer(){
+    private boolean playerExists(Context context, int playerId) {
+        final PlayersSQLiteHelper playersHelper = new PlayersSQLiteHelper(context, "Players", null, 1);
 
+        SQLiteDatabase playersDB = playersHelper.getReadableDatabase();
+        String[] fields = new String[] {"id"};
+        String[] args = new String[] {String.valueOf(playerId)};
+        //Select all the players from the teamId stored
+        Cursor cPlayer = playersDB.query("Players", fields, "id=?", args, null, null, null);
+
+        if(cPlayer.moveToFirst()) return true;
+        else return false;
     }
 
-    public void deletePlayer() {
+    public void createPlayer(Context context) {
+        final PlayersSQLiteHelper playersHelper = new PlayersSQLiteHelper(context, "Players", null, 1);
 
+        SQLiteDatabase playersDB = playersHelper.getReadableDatabase();
+
+        //Create the object containing
+        ContentValues newPlayer = new ContentValues();
+        newPlayer.put("teamId", this.teamId);
+        newPlayer.put("numPlayer", this.numPlayer);
+        newPlayer.put("namePlayer", this.namePlayer);
+
+        //Insert the new player in the DB
+        int playerId = (int)playersDB.insert("Players", null, newPlayer);
+        this.playerId = playerId;
+    }
+
+    public void updatePlayer(Context context){
+        final PlayersSQLiteHelper playersHelper = new PlayersSQLiteHelper(context, "Players", null, 1);
+
+        SQLiteDatabase playersDB = playersHelper.getReadableDatabase();
+
+        //Put the new values of the player
+        ContentValues newPlayerValues = new ContentValues();
+        newPlayerValues.put("numPlayer", this.numPlayer);
+        newPlayerValues.put("namePlayer", this.namePlayer);
+
+        //Update the player in the DB
+        String[] args = new String[]{String.valueOf(this.playerId)};
+        playersDB.update("Players", newPlayerValues, "id=?", args);
+    }
+
+    public void deletePlayer(Context context) {
+        final PlayersSQLiteHelper playersHelper = new PlayersSQLiteHelper(context, "Players", null, 1);
+
+        SQLiteDatabase playersDB = playersHelper.getReadableDatabase();
+
+        //Delete the selected player from the DB
+        String[] args = new String[]{String.valueOf(this.playerId)};
+        playersDB.execSQL("DELETE FROM Players WHERE id=?", args);
     }
 
     public static List<Player> getAllPlayers(Context context, int teamId) {

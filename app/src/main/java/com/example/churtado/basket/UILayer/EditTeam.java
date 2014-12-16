@@ -1,14 +1,19 @@
 package com.example.churtado.basket.UILayer;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.churtado.basket.DomainLayer.Player;
 import com.example.churtado.basket.DomainLayer.Season;
@@ -29,8 +34,10 @@ public class EditTeam extends ActionBarActivity {
     }
 
     private void loadPlayers() {
+        //TODO:separate addPlayers button from the table layout. Only delete or update the selected row, not all the table
         //Find the table layout
         final TableLayout tblPlayers = (TableLayout)findViewById(R.id.tblPlayers);
+        tblPlayers.removeAllViews();
         //Get all the players from the team
         List<Player> players = Player.getAllPlayers(EditTeam.this, season.getTeamId());
         for(int i = 0; i < players.size(); ++i) {
@@ -38,8 +45,8 @@ public class EditTeam extends ActionBarActivity {
             TableRow tbrPlayer = new TableRow(this);
             //Create a hidden TextView to store the player id
             TextView txtPlayerId = new TextView(this);
-            txtPlayerId.setText(String.valueOf(players.get(i)));
-            txtPlayerId.setVisibility(View.INVISIBLE);
+            txtPlayerId.setText(String.valueOf(players.get(i).getPlayerId()));
+            txtPlayerId.setVisibility(View.GONE);
             //Create two TextView to show the info of each player
             TextView txtPlayerNumber = new TextView(this);
             txtPlayerNumber.setText(String.valueOf(players.get(i).getNumPlayer()));
@@ -51,13 +58,74 @@ public class EditTeam extends ActionBarActivity {
             Button btnEditPlayer = new Button(this);
             btnEditPlayer.setText("Edit");
             btnEditPlayer.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-            //TODO: Add onClick function
+            btnEditPlayer.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    //Get all the row with the player's info
+                    TableRow tbrSelectedPlayer = (TableRow)(((Button)arg0).getParent());
+                    TextView txtPlayerId = (TextView)tbrSelectedPlayer.getChildAt(0);
+                    TextView txtPlayerNum = (TextView)tbrSelectedPlayer.getChildAt(1);
+                    TextView txtPlayerName = (TextView)tbrSelectedPlayer.getChildAt(2);
+                    String strPlayerId = String.valueOf(txtPlayerId.getText());
+                    final int playerId = Integer.valueOf(strPlayerId);
+                    //Modal to enter the name and number of the player
+                    final EditText inputNumber = new EditText(EditTeam.this);
+                    inputNumber.setText(txtPlayerNum.getText());
+                    final EditText inputName = new EditText(EditTeam.this);
+                    inputName.setText(txtPlayerName.getText());
+                    LinearLayout layout = new LinearLayout(EditTeam.this);
+                    layout.setOrientation(LinearLayout.VERTICAL);
+                    layout.addView(inputNumber);
+                    layout.addView(inputName);
+                    new AlertDialog.Builder(EditTeam.this)
+                            .setTitle("Update Player")
+                            .setMessage("Write the new name and/or number to update the player:")
+                            .setView(layout)
+                            .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    int playerNumber = Integer.valueOf(String.valueOf(inputNumber.getText()));
+                                    String playerName = String.valueOf(inputName.getText());
+                                    //Update the player
+                                    Player playerToUpdate = new Player(playerId, season.getTeamId(), playerNumber, playerName);
+                                    playerToUpdate.updatePlayer(EditTeam.this);
+                                    loadPlayers();
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Do nothing.
+                        }
+                    }).show();
+                }
+            });
             //Create a Button to delete the player
             Button btnDeletePlayer = new Button(this);
             btnDeletePlayer.setText("Delete");
             btnDeletePlayer.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-            //TODO: Add onClick function
+            btnDeletePlayer.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    //Get all the row with the player's info
+                    TableRow tbrSelectedPlayer = (TableRow)(((Button)arg0).getParent());
+                    TextView txtPlayerId = (TextView)tbrSelectedPlayer.getChildAt(0);
+                    final int playerId = Integer.valueOf(String.valueOf(txtPlayerId.getText()));
+                    //Modal to confirm player's deletion
+                    new AlertDialog.Builder(EditTeam.this)
+                            .setTitle("Delete Player")
+                            .setMessage("Are you sure you want to delete this player?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //Delete the player
+                                    Player playerToDelete = new Player(playerId, season.getTeamId(), 0, "");
+                                    playerToDelete.deletePlayer(EditTeam.this);
+                                    loadPlayers();
+                                }
+                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Do nothing.
+                        }
+                    }).show();
+                }
+            });
             //Add the controls to the row
+            tbrPlayer.addView(txtPlayerId);
             tbrPlayer.addView(txtPlayerNumber);
             tbrPlayer.addView(txtPlayerName);
             tbrPlayer.addView(btnEditPlayer);
@@ -68,11 +136,45 @@ public class EditTeam extends ActionBarActivity {
         }
 
         //Create a new button to add new players
+        //TODO:Check that the user enters the number and the name
+        //TODO:Check that the number is only ints and name only numbers
         TableRow tbrNewPlayer = new TableRow(this);
-        Button btnAddPlayer = new Button(this);
+        final Button btnAddPlayer = new Button(this);
         btnAddPlayer.setText("Add Player");
         btnAddPlayer.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-        //TODO: Add onClick function
+        //Click function to add a new player
+        btnAddPlayer.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //Modal to enter the name and number of the player
+                final EditText inputNumber = new EditText(EditTeam.this);
+                inputNumber.setHint("Number");
+                final EditText inputName = new EditText(EditTeam.this);
+                inputName.setHint("Name");
+                LinearLayout layout = new LinearLayout(EditTeam.this);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.addView(inputNumber);
+                layout.addView(inputName);
+                new AlertDialog.Builder(EditTeam.this)
+                        .setTitle("New Player")
+                        .setMessage("Write the name and number of the new player:")
+                        .setView(layout)
+                        .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                int playerNumber = Integer.valueOf(String.valueOf(inputNumber.getText()));
+                                String playerName = String.valueOf(inputName.getText());
+                                //Create the new player
+                                Player newPlayer = new Player(season.getTeamId(), playerNumber, playerName);
+                                newPlayer.createPlayer(EditTeam.this);
+                                loadPlayers();
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Do nothing.
+                    }
+                }).show();
+            }
+        });
+        tblPlayers.addView(btnAddPlayer, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
     }
 
     @Override

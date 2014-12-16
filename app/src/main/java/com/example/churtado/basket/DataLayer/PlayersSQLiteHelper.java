@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by churtado on 11/12/2014.
  */
 public class PlayersSQLiteHelper extends SQLiteOpenHelper {
+    //TODO:Add surname to players
 
     //SQL Sentence to create the table of Players
     String sqlCreate = "CREATE TABLE Players (id INTEGER PRIMARY KEY, teamId INT, numPlayer INT, namePlayer TEXT)";
