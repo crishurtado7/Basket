@@ -7,6 +7,128 @@
     tools:context="com.example.churtado.basket.UILayer.GameConfig">
 
     <TextView android:text="Game Config" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:id="@+id/btnHomePlayers"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guest"
+        android:id="@+id/btnGuestPlayers"
+        android:layout_alignTop="@+id/textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lstHomePlayers"
+        android:layout_below="@+id/btnHomePlayers"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/btnHomePlayers"
+        android:layout_alignEnd="@+id/btnHomePlayers" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lstGuestPlayers"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/btnGuestPlayers"
+        android:layout_alignStart="@+id/btnGuestPlayers"
+        android:layout_below="@+id/btnGuestPlayers" />
+
+    <TableLayout
+        android:orientation="vertical"
+        android:id="@+id/layoutSettings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/lstHomePlayers"
+        android:layout_toLeftOf="@+id/lstGuestPlayers"
+        android:layout_toStartOf="@+id/lstGuestPlayers"
+        android:layout_below="@+id/btnGuestPlayers">
+            <TableRow android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/txtQuarters"
+                    android:text="Number of quarters: "
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <NumberPicker android:id="@+id/quarterNumbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    />
+            </TableRow>
+            <TableRow android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/txtMinutes"
+                    android:text="Minutes per quarter: "
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <NumberPicker android:id="@+id/quarterMinutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" />
+            </TableRow>
+            <TableRow android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/txtExtraTime"
+                    android:text="Extra times?"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <CheckBox
+                    android:id="@+id/chkExtraTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:checked="true"/>
+                <NumberPicker
+                    android:id="@+id/extraTimeMinutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" />
+            </TableRow>
+        </TableLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="START GAME"
+        android:id="@+id/btnStartGame"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTeamGuestName"
+        android:hint="Team's name"
+        android:layout_alignTop="@+id/btnGuestPlayers"
+        android:layout_toLeftOf="@+id/btnGuestPlayers"
+        android:layout_toRightOf="@+id/btnStartGame"
+        android:layout_toEndOf="@+id/btnStartGame" />
 
 </RelativeLayout>

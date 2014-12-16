@@ -35,6 +35,8 @@ public class EditTeam extends ActionBarActivity {
 
     private void loadPlayers() {
         //TODO:separate addPlayers button from the table layout. Only delete or update the selected row, not all the table
+        //TODO:only one player with the same number in the same team
+        //TODO:scroll in list
         //Find the table layout
         final TableLayout tblPlayers = (TableLayout)findViewById(R.id.tblPlayers);
         tblPlayers.removeAllViews();

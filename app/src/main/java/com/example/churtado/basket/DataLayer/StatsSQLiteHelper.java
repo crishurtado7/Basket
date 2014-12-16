@@ -10,10 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class StatsSQLiteHelper extends SQLiteOpenHelper {
 
     //SQL Sentence to create the table of Stats
-    String sqlCreate = "CREATE TABLE Stats (seasonId INT, playerId INT, opponentName TEXT, date DATE, " +
+    String sqlCreate = "CREATE TABLE Stats (id INTEGER PRIMARY KEY, seasonId INT, playerId INT, opponentName TEXT, date DATE, " +
                         "minutes DOUBLE, totalPoints INT, t2Done INT, t2Attempted INT, t3Done INT, t3Attempted INT," +
                         "tcDone INT, tcAttempted INT, tlDone INT, tlAttempted INT, defRebounds INT, offRebounds INT, assists INT, steals INT," +
-                        "turnovers INT, blocks INT, receivedBlocks INT, committedFouls INT, receivedFouls INT, valoration INT)";
+                        "turnovers INT, blocks INT, receivedBlocks INT, committedFouls INT, receivedFouls INT, valuation INT)";
 
     public StatsSQLiteHelper(Context contexto, String nombre,
                              SQLiteDatabase.CursorFactory factory, int version) {

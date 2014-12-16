@@ -4,16 +4,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.example.churtado.basket.DomainLayer.GameStats;
 import com.example.churtado.basket.R;
 
 
 public class Game extends ActionBarActivity {
 
+    GameStats gameStats = GameStats.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        TextView txtHello = (TextView)findViewById(R.id.txtHello);
+        txtHello.setText("Game view. Team A: " + gameStats.getTeamHome() +
+                            " Team B: " + gameStats.getTeamGuest() +
+                            " Number of players team A: " + String.valueOf(gameStats.getLstPlayerStatsHome().size()));
     }
 
 
