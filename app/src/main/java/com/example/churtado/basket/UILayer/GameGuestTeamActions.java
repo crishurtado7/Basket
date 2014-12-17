@@ -5,18 +5,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.churtado.basket.R;
 
 /**
- * Created by churtado on 16/12/2014.
+ * Created by churtado on 17/12/2014.
  */
-public class GameFragment extends Fragment {
-    //TODO:loading http://stackoverflow.com/questions/1979524/android-splashscreen
+public class GameGuestTeamActions extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_game, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_game_guest_team_actions, container, false);
 
         return rootView;
     }

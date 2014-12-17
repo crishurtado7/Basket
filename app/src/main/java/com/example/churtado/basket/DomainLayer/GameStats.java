@@ -25,8 +25,27 @@ public class GameStats {
     private List<PlayerStats> lstPlayerStatsHome;
     private List<PlayerStats> lstPlayerStatsGuest;
 
+    private List<Integer> lstPlayersOnCourtHome;
+    private List<Integer> lstPlayersOnCourtGuest;
+
     private static final GameStats gameStats = new GameStats();
     public static GameStats getInstance() {return gameStats;}
+
+    public List<Integer> getLstPlayersOnCourtHome() {
+        return lstPlayersOnCourtHome;
+    }
+
+    public void setLstPlayersOnCourtHome(List<Integer> lstPlayersOnCourtHome) {
+        this.lstPlayersOnCourtHome = lstPlayersOnCourtHome;
+    }
+
+    public List<Integer> getLstPlayersOnCourtGuest() {
+        return lstPlayersOnCourtGuest;
+    }
+
+    public void setLstPlayersOnCourtGuest(List<Integer> lstPlayersOnCourtGuest) {
+        this.lstPlayersOnCourtGuest = lstPlayersOnCourtGuest;
+    }
 
     public String getTeamHome() {
         return teamHome;

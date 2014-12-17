@@ -48,25 +48,114 @@ public class GameConfig extends ActionBarActivity {
         NumberPicker numQuarters = (NumberPicker)findViewById(R.id.quarterNumbers);
         NumberPicker quarterMinutes = (NumberPicker)findViewById(R.id.quarterMinutes);
         NumberPicker extraTimeMinutes = (NumberPicker)findViewById(R.id.extraTimeMinutes);
-        numQuarters.setMinValue(0);
+        numQuarters.setMinValue(1);
         numQuarters.setMaxValue(8);
-        quarterMinutes.setMinValue(0);
+        quarterMinutes.setMinValue(1);
         quarterMinutes.setMaxValue(20);
-        extraTimeMinutes.setMinValue(0);
+        extraTimeMinutes.setMinValue(1);
         extraTimeMinutes.setMaxValue(20);
 
         //StartGame button. Initialize the GameStats class with the parameters chosen
         Button btnStartGame = (Button)findViewById(R.id.btnStartGame);
+        //TODO:check that the user select 5 players
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                NumberPicker numberOfQuarters = (NumberPicker)findViewById(R.id.quarterNumbers);
-                NumberPicker minutesPerQuarter = (NumberPicker)findViewById(R.id.quarterMinutes);
-                CheckBox extraTimes = (CheckBox)findViewById(R.id.chkExtraTime);
-                NumberPicker minutesPerExtraTime = (NumberPicker)findViewById(R.id.extraTimeMinutes);
-                EditText txtTeamGuestName = (EditText)findViewById(R.id.txtTeamGuestName);
-                gameStats.initGameStats(season.getTeamName(), String.valueOf(txtTeamGuestName.getText()), numberOfQuarters.getValue(), minutesPerQuarter.getValue(), extraTimes.isChecked(), minutesPerExtraTime.getValue(), lstPlayerStatsHome, lstPlayerStatsGuest);
-                Intent i = new Intent(getApplicationContext(), Game.class);
-                startActivity(i);
+                boolean correctTeams = checkTeams();
+                if(correctTeams) {
+                    NumberPicker numberOfQuarters = (NumberPicker)findViewById(R.id.quarterNumbers);
+                    NumberPicker minutesPerQuarter = (NumberPicker)findViewById(R.id.quarterMinutes);
+                    CheckBox extraTimes = (CheckBox)findViewById(R.id.chkExtraTime);
+                    NumberPicker minutesPerExtraTime = (NumberPicker)findViewById(R.id.extraTimeMinutes);
+                    EditText txtTeamGuestName = (EditText)findViewById(R.id.txtTeamGuestName);
+                    gameStats.initGameStats(season.getTeamName(), String.valueOf(txtTeamGuestName.getText()), numberOfQuarters.getValue(), minutesPerQuarter.getValue(), extraTimes.isChecked(), minutesPerExtraTime.getValue(), lstPlayerStatsHome, lstPlayerStatsGuest);
+                    //Modals to select the initial five players
+                    final CharSequence[] playersToShow = new CharSequence[lstPlayerStatsHome.size()];
+                    for(int i = 0; i < lstPlayerStatsHome.size(); ++i) {
+                        playersToShow[i] = String.valueOf(lstPlayerStatsHome.get(i).getPlayerNum()) + " - " + lstPlayerStatsHome.get(i).getPlayerName();
+                    }
+                    // arraylist to keep the selected items
+                    final ArrayList selectedPlayers = new ArrayList();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GameConfig.this);
+                    builder.setTitle("Select the starting players (Home)");
+                    builder.setMultiChoiceItems(playersToShow, null,
+                            new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int indexSelected,boolean isChecked) {
+                                    if (isChecked) {
+                                        // If the user checked the item, add it to the selected items
+                                        selectedPlayers.add(indexSelected);
+                                    } else if (selectedPlayers.contains(indexSelected)) {
+                                        // Else, if the item is already in the array, remove it
+                                        selectedPlayers.remove(Integer.valueOf(indexSelected));
+                                    }
+                                }
+                            })
+                            // Set the action buttons
+                            .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    gameStats.setLstPlayersOnCourtHome(selectedPlayers);
+
+                                    final CharSequence[] playersToShow = new CharSequence[lstPlayerStatsGuest.size()];
+                                    for(int i = 0; i < lstPlayerStatsGuest.size(); ++i) {
+                                        playersToShow[i] = String.valueOf(lstPlayerStatsGuest.get(i).getPlayerNum()) + " - " + lstPlayerStatsGuest.get(i).getPlayerName();
+                                    }
+                                    // arraylist to keep the selected items
+                                    final ArrayList selectedPlayers = new ArrayList();
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(GameConfig.this);
+                                    builder.setTitle("Select the starting players (Guest)");
+                                    builder.setMultiChoiceItems(playersToShow, null,
+                                            new DialogInterface.OnMultiChoiceClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int indexSelected,boolean isChecked) {
+                                                    if (isChecked) {
+                                                        // If the user checked the item, add it to the selected items
+                                                        selectedPlayers.add(indexSelected);
+                                                    } else if (selectedPlayers.contains(indexSelected)) {
+                                                        // Else, if the item is already in the array, remove it
+                                                        selectedPlayers.remove(Integer.valueOf(indexSelected));
+                                                    }
+                                                }
+                                            })
+                                            // Set the action buttons
+                                            .setPositiveButton("Start Game", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    gameStats.setLstPlayersOnCourtGuest(selectedPlayers);
+
+                                                    Intent i = new Intent(getApplicationContext(), Game.class);
+                                                    startActivity(i);
+                                                }
+                                            })
+                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //Nothing to do
+                                                }
+                                            });
+
+                                    AlertDialog dialog2 = builder.create();
+                                    dialog2.show();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //Nothing to do
+                                }
+                            });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                else {
+                    new AlertDialog.Builder(GameConfig.this)
+                            .setTitle("Error")
+                            .setMessage("Each team has to have at least 5 players")
+                            .show();
+                }
             }
         });
 
@@ -110,6 +199,10 @@ public class GameConfig extends ActionBarActivity {
                 }).show();
             }
         });
+    }
+
+    private boolean checkTeams() {
+        return (lstPlayerStatsHome.size() >= 5 && lstPlayerStatsGuest.size() >= 5);
     }
 
     private void addGuestPlayerToList(int playerNumber, String playerName) {
