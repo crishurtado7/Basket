@@ -12,11 +12,12 @@ import com.example.churtado.basket.R;
  * Created by churtado on 16/12/2014.
  */
 public class GameFragment extends Fragment {
+    View rootView = null;
     //TODO:loading http://stackoverflow.com/questions/1979524/android-splashscreen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_game, container, false);
+        rootView = inflater.inflate(R.layout.fragment_game, container, false);
 
         return rootView;
     }

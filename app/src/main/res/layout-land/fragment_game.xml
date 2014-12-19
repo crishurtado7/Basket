@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
-    <TableRow android:layout_width="match_parent"
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2">
-        <fragment android:name="com.example.churtado.basket.UILayer.GameHomeTeamPlayers"
-            android:id="@+id/frgHomeTeamPlayers"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <fragment android:name="com.example.churtado.basket.UILayer.GameScoreBox"
-            android:id="@+id/frgScoreBox"
-            android:layout_weight="4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <fragment android:name="com.example.churtado.basket.UILayer.GameGuestTeamPlayers"
-            android:id="@+id/frgGuestTeamPlayers"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-    </TableRow>
-    <TableRow android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
-        <fragment android:name="com.example.churtado.basket.UILayer.GameHomeTeamActions"
-            android:id="@+id/frgHomeTeamActions"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <fragment android:name="com.example.churtado.basket.UILayer.GameGuestTeamActions"
-            android:id="@+id/frgGuestTeamActions"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-    </TableRow>
-</TableLayout>
+        android:orientation="horizontal">
+        <TableRow android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+            <fragment android:name="com.example.churtado.basket.UILayer.GameHomeTeamPlayers"
+                android:id="@+id/frgHomeTeamPlayers"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <fragment android:name="com.example.churtado.basket.UILayer.GameScoreBox"
+                android:id="@+id/frgScoreBox"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <fragment android:name="com.example.churtado.basket.UILayer.GameGuestTeamPlayers"
+                android:id="@+id/frgGuestTeamPlayers"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </TableRow>
+        <TableRow android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+            <fragment android:name="com.example.churtado.basket.UILayer.GameHomeTeamActions"
+                android:id="@+id/frgHomeTeamActions"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <fragment android:name="com.example.churtado.basket.UILayer.GameGuestTeamActions"
+                android:id="@+id/frgGuestTeamActions"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </TableRow>
+    </TableLayout>

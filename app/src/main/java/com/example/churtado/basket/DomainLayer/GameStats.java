@@ -157,5 +157,12 @@ public class GameStats {
                 c.get(Calendar.DAY_OF_MONTH)).getTime();
     }
 
+    public void scoreTeamHome(int points) {
+        this.teamHomeTotalPoints += points;
+    }
+
+    public void scoreTeamGuest(int points) {
+        this.teamGuestTotalPoints += points;
+    }
 
 }

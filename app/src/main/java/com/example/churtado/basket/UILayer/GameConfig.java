@@ -31,6 +31,7 @@ public class GameConfig extends ActionBarActivity {
     //TODO:limit number pickers
     //TODO:can select if my team is home or guest
     //TODO:more configs to add: place where the game it's played, coaches..
+    //TODO:select all for home players
 
     GameStats gameStats = GameStats.getInstance();
     Season season = Season.getInstance();
@@ -44,6 +45,12 @@ public class GameConfig extends ActionBarActivity {
         //Initialize the two lists of players
         lstPlayerStatsHome = new ArrayList<PlayerStats>();
         lstPlayerStatsGuest = new ArrayList<PlayerStats>();
+        //TODO:remove this
+        lstPlayerStatsGuest.add(new PlayerStats(0, 1, "aa"));
+        lstPlayerStatsGuest.add(new PlayerStats(0, 2, "bb"));
+        lstPlayerStatsGuest.add(new PlayerStats(0, 3, "cc"));
+        lstPlayerStatsGuest.add(new PlayerStats(0, 4, "dd"));
+        lstPlayerStatsGuest.add(new PlayerStats(0, 5, "ee"));
         //Set min and max values for the number pickers
         NumberPicker numQuarters = (NumberPicker)findViewById(R.id.quarterNumbers);
         NumberPicker quarterMinutes = (NumberPicker)findViewById(R.id.quarterMinutes);

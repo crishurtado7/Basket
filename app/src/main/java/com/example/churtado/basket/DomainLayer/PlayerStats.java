@@ -1,5 +1,7 @@
 package com.example.churtado.basket.DomainLayer;
 
+import com.example.churtado.basket.Enums.GameActions;
+
 /**
  * Created by churtado on 16/12/2014.
  */
@@ -269,4 +271,83 @@ public class PlayerStats {
         this.valuation = 0;
     }
 
+    public void makeAction(GameActions action, double time) {
+        switch (action) {
+            case T1DONE:
+                this.tlDone += 1;
+                this.tlAttempted += 1;
+                this.valuation += 1;
+                break;
+            case T1FAILED:
+                this.tlAttempted += 1;
+                this.valuation -= 1;
+                break;
+            case T2DONE:
+                this.t2Done += 1;
+                this.t2Attempted += 1;
+                this.tcDone += 1;
+                this.tcAttempted += 1;
+                this.valuation += 2;
+                break;
+            case T2FAILED:
+                this.t2Attempted += 1;
+                this.tcAttempted += 1;
+                this.valuation -= 1;
+                break;
+            case T3DONE:
+                this.t3Done += 1;
+                this.t3Attempted += 1;
+                this.tcDone += 1;
+                this.tcAttempted += 1;
+                this.valuation += 3;
+                break;
+            case T3FAILED:
+                this.t3Attempted += 1;
+                this.tcAttempted += 1;
+                this.valuation -= 1;
+                break;
+            case OFF_REBOUND:
+                this.offRebounds += 1;
+                this.valuation += 1;
+                break;
+            case DEF_REBOUND:
+                this.defRebounds += 1;
+                this.valuation += 1;
+                break;
+            case ASSIST:
+                this.assists += 1;
+                this.valuation += 1;
+                break;
+            case STEAL:
+                this.steals += 1;
+                this.valuation += 1;
+                break;
+            case TURNOVER:
+                this.turnovers += 1;
+                this.valuation -= 1;
+                break;
+            case BLOCK:
+                this.blocks += 1;
+                this.valuation += 1;
+                break;
+            case RECEIVED_BLOCK:
+                this.receivedBlocks += 1;
+                this.valuation -= 1;
+                break;
+            case FOUL:
+                this.committedFouls += 1;
+                this.valuation -= 1;
+                break;
+            case RECEIVED_FOUL:
+                this.receivedFouls += 1;
+                this.valuation += 1;
+                break;
+            //TODO: update minutes
+            //TODO:how to update minutes in stats view?
+            case SWITCH_IN:
+                break;
+            case SWITCH_OUT:
+                break;
+        }
+    }
 }
