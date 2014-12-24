@@ -21,14 +21,14 @@ import java.util.List;
 /**
  * Created by churtado on 17/12/2014.
  */
-public class GameGuestTeamActions extends Fragment {
+public class GameGuestTeamActions {
 
     GameStats gameStats = GameStats.getInstance();
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    private static final GameGuestTeamActions gameGuestTeamActions = new GameGuestTeamActions();
+    public static GameGuestTeamActions getInstance() {return gameGuestTeamActions;}
 
-        final View rootView = inflater.inflate(R.layout.fragment_game_guest_team_actions, container, false);
+    public void Initialize(final View rootView) {
 
         //Get all the buttons to set the proper actions
         Button btnT1DoneGuest = (Button) rootView.findViewById(R.id.btnT1DoneGuest);
@@ -100,9 +100,6 @@ public class GameGuestTeamActions extends Fragment {
                 committedBlockGuest(rootView);
             }
         });
-
-        return rootView;
-
     }
 
     private CharSequence[] getListGuestPlayersOnCourt(View v, List<PlayerStats> lstPlayerStatsGuest, List<Integer> lstPlayersOnCourtGuest) {
@@ -123,7 +120,11 @@ public class GameGuestTeamActions extends Fragment {
     //TODO:update the fragment with the stats
 
     private void updateGuestTeamScore() {
-        ((Game)getActivity()).updateGuestScoreBoxFragment();
+        GameScoreBox.getInstance().updateGuestTeamScore();
+    }
+
+    private void updateGuestTeamStats() {
+        if(gameStats.getStatsGuestTableAdapter() != null)gameStats.getStatsGuestTableAdapter().notifyDataSetChanged();
     }
 
     private void t1DoneGuest(final View v) {
@@ -140,6 +141,7 @@ public class GameGuestTeamActions extends Fragment {
                 gameStats.scoreTeamGuest(1);
                 dialog.dismiss();
                 updateGuestTeamScore();
+                updateGuestTeamStats();
                 showMessage(v, "1 point scored by " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).getPlayerName() + "(Guest)");
             }
         });
@@ -162,6 +164,7 @@ public class GameGuestTeamActions extends Fragment {
                 gameStats.scoreTeamGuest(2);
                 dialog.dismiss();
                 updateGuestTeamScore();
+                updateGuestTeamStats();
                 showMessage(v, "2 points scored by " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).getPlayerName() + "(Guest)");
             }
         });
@@ -184,6 +187,7 @@ public class GameGuestTeamActions extends Fragment {
                 gameStats.scoreTeamGuest(3);
                 dialog.dismiss();
                 updateGuestTeamScore();
+                updateGuestTeamStats();
                 showMessage(v, "3 points scored by " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).getPlayerName() + "(Guest)");
             }
         });
@@ -204,6 +208,7 @@ public class GameGuestTeamActions extends Fragment {
                 //Add failed shoot to the player
                 lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).makeAction(GameActions.T1FAILED, 0);
                 dialog.dismiss();
+                updateGuestTeamStats();
                 showMessage(v, "1 point shot failed by " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -224,6 +229,7 @@ public class GameGuestTeamActions extends Fragment {
                 //Add failed shoot to the player
                 lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).makeAction(GameActions.T2FAILED, 0);
                 dialog.dismiss();
+                updateGuestTeamStats();
                 showMessage(v, "2 point shot failed by " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).getPlayerName() + "(Guest)");
             }
         });
@@ -244,6 +250,7 @@ public class GameGuestTeamActions extends Fragment {
                 //Add failed shoot to the player
                 lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).makeAction(GameActions.T3FAILED, 0);
                 dialog.dismiss();
+                updateGuestTeamStats();
                 showMessage(v, "3 point shoot failed by " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).getPlayerName() + "(Guest)");
             }
         });
@@ -264,6 +271,7 @@ public class GameGuestTeamActions extends Fragment {
                 //Add offensive rebound to the player
                 lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).makeAction(GameActions.OFF_REBOUND, 0);
                 dialog.dismiss();
+                updateGuestTeamStats();
                 showMessage(v, "Offensive rebound by " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).getPlayerName() + "(Guest)");
             }
         });
@@ -284,6 +292,7 @@ public class GameGuestTeamActions extends Fragment {
                 //Add defensive rebound to the player
                 lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).makeAction(GameActions.DEF_REBOUND, 0);
                 dialog.dismiss();
+                updateGuestTeamStats();
                 showMessage(v, "Defensive rebound by " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).getPlayerName() + "(Guest)");
             }
         });
@@ -306,7 +315,7 @@ public class GameGuestTeamActions extends Fragment {
                 //Store the player that loosed the ball
                 final int whichPlayerTurnover = whichPlayer;
                 dialog.dismiss();
-
+                updateGuestTeamStats();
                 //Show modal to select the player who stole the ball
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("Who stole the ball?");
@@ -344,7 +353,7 @@ public class GameGuestTeamActions extends Fragment {
                 //Store the player that blocked the ball
                 final int whichPlayerBlocked = whichPlayer;
                 dialog.dismiss();
-
+                updateGuestTeamStats();
                 //Show modal to select the player who received the block
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("Who received the block?");
@@ -381,7 +390,7 @@ public class GameGuestTeamActions extends Fragment {
                 //Store the player that make the foul
                 final int whichPlayerFoul = whichPlayer;
                 dialog.dismiss();
-
+                updateGuestTeamStats();
                 //Show modal to select the player who received the foul
                 //TODO:add option for anybody (+ store fouls made by the team - technical fouls)
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());

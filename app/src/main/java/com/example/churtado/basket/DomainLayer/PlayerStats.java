@@ -12,7 +12,9 @@ public class PlayerStats {
     private int playerNum;
     private String playerName;
 
-    private double minutes;
+    private long lastAccessMinutes;
+
+    private long minutes;
     private int totalPoints;
     private int t2Done;
     private int t2Attempted;
@@ -57,11 +59,11 @@ public class PlayerStats {
         this.playerName = playerName;
     }
 
-    public double getMinutes() {
+    public long getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(double minutes) {
+    public void setMinutes(long minutes) {
         this.minutes = minutes;
     }
 
@@ -223,7 +225,7 @@ public class PlayerStats {
         this.playerId = 0;
         this.playerNum = 0;
         this.playerName = "";
-        this.minutes = 0.0;
+        this.minutes = 0;
         this.totalPoints = 0;
         this.t2Done = 0;
         this.t2Attempted = 0;
@@ -249,7 +251,7 @@ public class PlayerStats {
         this.playerId = playerId;
         this.playerNum = playerNum;
         this.playerName = playerName;
-        this.minutes = 0.0;
+        this.minutes = 0;
         this.totalPoints = 0;
         this.t2Done = 0;
         this.t2Attempted = 0;
@@ -271,12 +273,13 @@ public class PlayerStats {
         this.valuation = 0;
     }
 
-    public void makeAction(GameActions action, double time) {
+    public void makeAction(GameActions action, long time) {
         switch (action) {
             case T1DONE:
                 this.tlDone += 1;
                 this.tlAttempted += 1;
                 this.valuation += 1;
+                this.totalPoints += 1;
                 break;
             case T1FAILED:
                 this.tlAttempted += 1;
@@ -288,6 +291,7 @@ public class PlayerStats {
                 this.tcDone += 1;
                 this.tcAttempted += 1;
                 this.valuation += 2;
+                this.totalPoints += 2;
                 break;
             case T2FAILED:
                 this.t2Attempted += 1;
@@ -300,6 +304,7 @@ public class PlayerStats {
                 this.tcDone += 1;
                 this.tcAttempted += 1;
                 this.valuation += 3;
+                this.totalPoints += 3;
                 break;
             case T3FAILED:
                 this.t3Attempted += 1;
@@ -345,8 +350,11 @@ public class PlayerStats {
             //TODO: update minutes
             //TODO:how to update minutes in stats view?
             case SWITCH_IN:
+                this.lastAccessMinutes = time;
                 break;
             case SWITCH_OUT:
+                this.minutes += (time - lastAccessMinutes);
+                this.lastAccessMinutes = 0;
                 break;
         }
     }

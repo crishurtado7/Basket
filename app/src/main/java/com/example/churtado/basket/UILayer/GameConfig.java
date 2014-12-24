@@ -64,7 +64,6 @@ public class GameConfig extends ActionBarActivity {
 
         //StartGame button. Initialize the GameStats class with the parameters chosen
         Button btnStartGame = (Button)findViewById(R.id.btnStartGame);
-        //TODO:check that the user select 5 players
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 boolean correctTeams = checkTeams();
@@ -102,49 +101,65 @@ public class GameConfig extends ActionBarActivity {
                             .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
-                                    gameStats.setLstPlayersOnCourtHome(selectedPlayers);
+                                    if(selectedPlayers.size() == 5) {
+                                        gameStats.setLstPlayersOnCourtHome(selectedPlayers);
 
-                                    final CharSequence[] playersToShow = new CharSequence[lstPlayerStatsGuest.size()];
-                                    for(int i = 0; i < lstPlayerStatsGuest.size(); ++i) {
-                                        playersToShow[i] = String.valueOf(lstPlayerStatsGuest.get(i).getPlayerNum()) + " - " + lstPlayerStatsGuest.get(i).getPlayerName();
-                                    }
-                                    // arraylist to keep the selected items
-                                    final ArrayList selectedPlayers = new ArrayList();
+                                        final CharSequence[] playersToShow = new CharSequence[lstPlayerStatsGuest.size()];
+                                        for(int i = 0; i < lstPlayerStatsGuest.size(); ++i) {
+                                            playersToShow[i] = String.valueOf(lstPlayerStatsGuest.get(i).getPlayerNum()) + " - " + lstPlayerStatsGuest.get(i).getPlayerName();
+                                        }
+                                        // arraylist to keep the selected items
+                                        final ArrayList selectedPlayers = new ArrayList();
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(GameConfig.this);
-                                    builder.setTitle("Select the starting players (Guest)");
-                                    builder.setMultiChoiceItems(playersToShow, null,
-                                            new DialogInterface.OnMultiChoiceClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int indexSelected,boolean isChecked) {
-                                                    if (isChecked) {
-                                                        // If the user checked the item, add it to the selected items
-                                                        selectedPlayers.add(indexSelected);
-                                                    } else if (selectedPlayers.contains(indexSelected)) {
-                                                        // Else, if the item is already in the array, remove it
-                                                        selectedPlayers.remove(Integer.valueOf(indexSelected));
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(GameConfig.this);
+                                        builder.setTitle("Select the starting players (Guest)");
+                                        builder.setMultiChoiceItems(playersToShow, null,
+                                                new DialogInterface.OnMultiChoiceClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int indexSelected,boolean isChecked) {
+                                                        if (isChecked) {
+                                                            // If the user checked the item, add it to the selected items
+                                                            selectedPlayers.add(indexSelected);
+                                                        } else if (selectedPlayers.contains(indexSelected)) {
+                                                            // Else, if the item is already in the array, remove it
+                                                            selectedPlayers.remove(Integer.valueOf(indexSelected));
+                                                        }
                                                     }
-                                                }
-                                            })
-                                            // Set the action buttons
-                                            .setPositiveButton("Start Game", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    gameStats.setLstPlayersOnCourtGuest(selectedPlayers);
+                                                })
+                                                // Set the action buttons
+                                                .setPositiveButton("Start Game", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        if(selectedPlayers.size() == 5) {
+                                                            gameStats.setLstPlayersOnCourtGuest(selectedPlayers);
 
-                                                    Intent i = new Intent(getApplicationContext(), Game.class);
-                                                    startActivity(i);
-                                                }
-                                            })
-                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    //Nothing to do
-                                                }
-                                            });
+                                                            Intent i = new Intent(getApplicationContext(), Game.class);
+                                                            startActivity(i);
+                                                        }
+                                                        else {
+                                                            new AlertDialog.Builder(GameConfig.this)
+                                                                    .setTitle("Error")
+                                                                    .setMessage("You have to select exactly 5 players")
+                                                                    .show();
+                                                        }
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        //Nothing to do
+                                                    }
+                                                });
 
-                                    AlertDialog dialog2 = builder.create();
-                                    dialog2.show();
+                                        AlertDialog dialog2 = builder.create();
+                                        dialog2.show();
+                                    }
+                                    else {
+                                        new AlertDialog.Builder(GameConfig.this)
+                                                .setTitle("Error")
+                                                .setMessage("You have to select exactly 5 players")
+                                                .show();
+                                    }
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

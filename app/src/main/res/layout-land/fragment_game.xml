@@ -1,40 +1,570 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--First row, containing team's players and box score-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <TableRow android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
-            <fragment android:name="com.example.churtado.basket.UILayer.GameHomeTeamPlayers"
-                android:id="@+id/frgHomeTeamPlayers"
-                android:layout_weight="3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <fragment android:name="com.example.churtado.basket.UILayer.GameScoreBox"
-                android:id="@+id/frgScoreBox"
-                android:layout_weight="4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <fragment android:name="com.example.churtado.basket.UILayer.GameGuestTeamPlayers"
-                android:id="@+id/frgGuestTeamPlayers"
-                android:layout_weight="3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-        </TableRow>
-        <TableRow android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3">
-            <fragment android:name="com.example.churtado.basket.UILayer.GameHomeTeamActions"
-                android:id="@+id/frgHomeTeamActions"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <!--First box, containing home's team players-->
+        <LinearLayout android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/txtHomeTeamName"/>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <fragment android:name="com.example.churtado.basket.UILayer.GameGuestTeamActions"
-                android:id="@+id/frgGuestTeamActions"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnHomePlayer1"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnHomePlayer2"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnHomePlayer3"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-        </TableRow>
-    </TableLayout>
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnHomePlayer4"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnHomePlayer5"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--Second box, containing score box-->
+        <LinearLayout android:layout_weight="1"
+            android:baselineAligned="false"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <LinearLayout android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="60"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/txtHomeTeamPoints"
+                        android:textSize="24sp"
+                        android:text="ScoreA"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/txtGuestTeamPoints"
+                        android:textSize="24sp"
+                        android:text="ScoreB"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="40">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:text="START"
+                        android:id="@+id/btnGameTimeStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtGameTime"
+                        android:textSize="24sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtGameQuarter"
+                        android:textSize="24sp"
+                        android:layout_marginLeft="5dp"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--Third box, containing guest's team players-->
+        <LinearLayout android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/txtGuestTeamName"/>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnGuestPlayer1"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnGuestPlayer2"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnGuestPlayer3"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnGuestPlayer4"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/btnGuestPlayer5"
+                        android:background="@drawable/circle_button"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="#ff644bff" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--Second row, containing team's actions-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <!--Fourth box, containing home's team actions-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT1DoneHome"
+                    android:text="+1"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT2DoneHome"
+                    android:text="+2"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT3DoneHome"
+                    android:text="+3"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnOffReboundHome"
+                    android:text="OR"/>
+            </TableRow>
+
+            <TableRow android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT1FailedHome"
+                    android:text="-1"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT2FailedHome"
+                    android:text="-2"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT3FailedHome"
+                    android:text="-3"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnDefReboundHome"
+                    android:text="DR"/>
+            </TableRow>
+
+            <TableRow android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnStealHome"
+                    android:text="Stl"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnTurnoverHome"
+                    android:text="TO"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnBlockHome"
+                    android:text="B"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnCommittedFoulHome"
+                    android:text="F"/>
+            </TableRow>
+
+        </LinearLayout>
+
+        <!--Fifth box, containing guest's team actions-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+            <TableRow android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT1DoneGuest"
+                    android:text="+1"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT2DoneGuest"
+                    android:text="+2"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT3DoneGuest"
+                    android:text="+3"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnOffReboundGuest"
+                    android:text="OR"/>
+            </TableRow>
+
+            <TableRow android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT1FailedGuest"
+                    android:text="-1"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT2FailedGuest"
+                    android:text="-2"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnT3FailedGuest"
+                    android:text="-3"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnDefReboundGuest"
+                    android:text="DR"/>
+            </TableRow>
+
+            <TableRow android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1">
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnStealGuest"
+                    android:text="Stl"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnTurnoverGuest"
+                    android:text="TO"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnBlockGuest"
+                    android:text="B"/>
+
+                <Button android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:id="@+id/btnCommittedFoulGuest"
+                    android:text="F"/>
+            </TableRow>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

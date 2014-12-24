@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by churtado on 17/12/2014.
  */
-public class GameHomeTeamPlayers extends Fragment {
+public class GameHomeTeamPlayers {
 
     GameStats gameStats = GameStats.getInstance();
 
@@ -32,17 +32,16 @@ public class GameHomeTeamPlayers extends Fragment {
     private Button btnHomePlayer4;
     private Button btnHomePlayer5;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    private static final GameHomeTeamPlayers gameHomeTeamPlayers = new GameHomeTeamPlayers();
+    public static GameHomeTeamPlayers getInstance() {return gameHomeTeamPlayers;}
 
-        View rootView = inflater.inflate(R.layout.fragment_game_home_team_players, container, false);
 
+    public void Initialize(View rootView) {
         TextView txtHomeTeamName = (TextView) rootView.findViewById(R.id.txtHomeTeamName);
         txtHomeTeamName.setText("Team A: " + gameStats.getTeamHome());
 
         setPlayerNumbers(rootView);
 
-        return rootView;
     }
 
     private void setPlayerNumbers(final View v) {
@@ -92,6 +91,10 @@ public class GameHomeTeamPlayers extends Fragment {
         Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    private void updateHomeTeamStats() {
+        if(gameStats.getStatsHomeTableAdapter() != null) gameStats.getStatsHomeTableAdapter().notifyDataSetChanged();
+    }
+
     private void switchPlayerHome(final View v, final int indexOfSelectedPlayerToSwitch, final Button btnPressed) {
         final List<PlayerStats> lstPlayerStatsHome = gameStats.getLstPlayerStatsHome();
         final List<Integer> lstPlayersOnCourtHome = gameStats.getLstPlayersOnCourtHome();
@@ -119,10 +122,11 @@ public class GameHomeTeamPlayers extends Fragment {
             public void onClick(DialogInterface dialog, int whichPlayer) {
                 //Switch players
                 String namePlayerOut = lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(indexOfSelectedPlayerToSwitch)).getPlayerName();
-                lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(indexOfSelectedPlayerToSwitch)).makeAction(GameActions.SWITCH_OUT, 0);
-                lstPlayerStatsHome.get(lstPlayersNotPlaying.get(whichPlayer)).makeAction(GameActions.SWITCH_IN, 0);
+                lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(indexOfSelectedPlayerToSwitch)).makeAction(GameActions.SWITCH_OUT, gameStats.getMillisPlayed());
+                lstPlayerStatsHome.get(lstPlayersNotPlaying.get(whichPlayer)).makeAction(GameActions.SWITCH_IN, gameStats.getMillisPlayed());
                 lstPlayersOnCourtHome.set(indexOfSelectedPlayerToSwitch, lstPlayersNotPlaying.get(whichPlayer));
                 btnPressed.setText(String.valueOf(lstPlayerStatsHome.get(lstPlayersNotPlaying.get(whichPlayer)).getPlayerNum()));
+                updateHomeTeamStats();
                 showMessage(v, "Switch(Home). " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(indexOfSelectedPlayerToSwitch)).getPlayerName() + " IN."
                         + namePlayerOut + " OUT");
                 dialog.dismiss();

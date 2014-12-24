@@ -17,8 +17,8 @@ import com.example.churtado.basket.R;
 /**
  * Created by churtado on 17/12/2014.
  */
-public class GameScoreBox extends Fragment {
-
+public class GameScoreBox {
+    //TODO:stop timer when it's foul, switch... (if it is not stopped)
     GameStats gameStats = GameStats.getInstance();
     long amountOfMillisecondsPerQuarter;
     long amountOfMillisecondsPerExtraTime;
@@ -33,10 +33,10 @@ public class GameScoreBox extends Fragment {
     Button btnGameTimeStart = null;
     int currentQuarter;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    private static final GameScoreBox gameScoreBox = new GameScoreBox();
+    public static GameScoreBox getInstance() {return gameScoreBox;}
 
-        View rootView = inflater.inflate(R.layout.fragment_game_score_box, container, false);
+    public void Initialize(View rootView) {
 
         btnGameTimeStart = (Button) rootView.findViewById(R.id.btnGameTimeStart);
         txtGameTime = (TextView) rootView.findViewById(R.id.txtGameTime);
@@ -85,8 +85,6 @@ public class GameScoreBox extends Fragment {
                 }
             }
         });
-
-        return rootView;
     }
 
     public void updateHomeTeamScore() {
@@ -106,6 +104,7 @@ public class GameScoreBox extends Fragment {
         String minutes = String.format("%02d", millisUntilFinished/60000);
         int seconds = (int)( (millisUntilFinished%60000)/1000);
         txtGameTime.setText(minutes + ":"+String.format("%02d",seconds));
+        gameStats.setMillisPlayed(remainingMilliseconds - millisUntilFinished);
     }
 
     private void createCountdownTimer(long amountOfMillis) {

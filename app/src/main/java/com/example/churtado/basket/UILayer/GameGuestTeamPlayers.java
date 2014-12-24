@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by churtado on 17/12/2014.
  */
-public class GameGuestTeamPlayers extends Fragment {
+public class GameGuestTeamPlayers {
 
     GameStats gameStats = GameStats.getInstance();
 
@@ -32,17 +32,14 @@ public class GameGuestTeamPlayers extends Fragment {
     private Button btnGuestPlayer4;
     private Button btnGuestPlayer5;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    private static final GameGuestTeamPlayers gameGuestTeamPlayers = new GameGuestTeamPlayers();
+    public static GameGuestTeamPlayers getInstance() {return gameGuestTeamPlayers;}
 
-        View rootView = inflater.inflate(R.layout.fragment_game_guest_team_players, container, false);
-
+    public void Initialize(View rootView) {
         TextView txtGuestTeamName = (TextView) rootView.findViewById(R.id.txtGuestTeamName);
         txtGuestTeamName.setText("Team B: " + gameStats.getTeamGuest());
 
         setPlayerNumbers(rootView);
-
-        return rootView;
     }
 
     private void setPlayerNumbers(final View v) {
@@ -92,6 +89,10 @@ public class GameGuestTeamPlayers extends Fragment {
         Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    private void updateGuestTeamStats() {
+        if(gameStats.getStatsGuestTableAdapter() != null)gameStats.getStatsGuestTableAdapter().notifyDataSetChanged();
+    }
+
     private void switchPlayerGuest(final View v, final int indexOfSelectedPlayerToSwitch, final Button btnPressed) {
         final List<PlayerStats> lstPlayerStatsGuest = gameStats.getLstPlayerStatsGuest();
         final List<Integer> lstPlayersOnCourtGuest = gameStats.getLstPlayersOnCourtGuest();
@@ -119,8 +120,8 @@ public class GameGuestTeamPlayers extends Fragment {
             public void onClick(DialogInterface dialog, int whichPlayer) {
                 //Switch players
                 String namePlayerOut = lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(indexOfSelectedPlayerToSwitch)).getPlayerName();
-                lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(indexOfSelectedPlayerToSwitch)).makeAction(GameActions.SWITCH_OUT, 0);
-                lstPlayerStatsGuest.get(lstPlayersNotPlaying.get(whichPlayer)).makeAction(GameActions.SWITCH_IN, 0);
+                lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(indexOfSelectedPlayerToSwitch)).makeAction(GameActions.SWITCH_OUT, gameStats.getMillisPlayed());
+                lstPlayerStatsGuest.get(lstPlayersNotPlaying.get(whichPlayer)).makeAction(GameActions.SWITCH_IN, gameStats.getMillisPlayed());
                 lstPlayersOnCourtGuest.set(indexOfSelectedPlayerToSwitch, lstPlayersNotPlaying.get(whichPlayer));
                 btnPressed.setText(String.valueOf(lstPlayerStatsGuest.get(lstPlayersNotPlaying.get(whichPlayer)).getPlayerNum()));
                 showMessage(v, "Switch(Guest). " + lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(indexOfSelectedPlayerToSwitch)).getPlayerName() + " IN."

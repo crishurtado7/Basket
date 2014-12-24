@@ -21,14 +21,14 @@ import java.util.List;
 /**
  * Created by churtado on 17/12/2014.
  */
-public class GameHomeTeamActions extends Fragment {
+public class GameHomeTeamActions {
 
     GameStats gameStats = GameStats.getInstance();
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        final View rootView = inflater.inflate(R.layout.fragment_game_home_team_actions, container, false);
+    private static final GameHomeTeamActions gameHomeTeamActions = new GameHomeTeamActions();
+    public static GameHomeTeamActions getInstance() {return gameHomeTeamActions;}
+    //TODO:disable acitons when time stopped?
+    public void Initialize(final View rootView) {
 
         //Get all the buttons to set the proper actions
         Button btnT1DoneHome = (Button) rootView.findViewById(R.id.btnT1DoneHome);
@@ -101,8 +101,6 @@ public class GameHomeTeamActions extends Fragment {
             }
         });
 
-        return rootView;
-
     }
 
     private CharSequence[] getListHomePlayersOnCourt(List<PlayerStats> lstPlayerStatsHome, List<Integer> lstPlayersOnCourtHome) {
@@ -122,7 +120,10 @@ public class GameHomeTeamActions extends Fragment {
     //TODO:update the fragment with the stats
 
     private void updateHomeTeamScore() {
-        ((Game)getActivity()).updateHomeScoreBoxFragment();
+        GameScoreBox.getInstance().updateHomeTeamScore();
+    }
+    private void updateHomeTeamStats() {
+        if(gameStats.getStatsHomeTableAdapter() != null) gameStats.getStatsHomeTableAdapter().notifyDataSetChanged();
     }
 
     private void t1DoneHome(final View v) {
@@ -139,6 +140,7 @@ public class GameHomeTeamActions extends Fragment {
                 gameStats.scoreTeamHome(1);
                 dialog.dismiss();
                 updateHomeTeamScore();
+                updateHomeTeamStats();
                 showMessage(v, "1 point scored by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -161,6 +163,7 @@ public class GameHomeTeamActions extends Fragment {
                 gameStats.scoreTeamHome(2);
                 dialog.dismiss();
                 updateHomeTeamScore();
+                updateHomeTeamStats();
                 showMessage(v, "2 points scored by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -183,6 +186,7 @@ public class GameHomeTeamActions extends Fragment {
                 gameStats.scoreTeamHome(3);
                 dialog.dismiss();
                 updateHomeTeamScore();
+                updateHomeTeamStats();
                 showMessage(v, "3 points scored by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -203,6 +207,7 @@ public class GameHomeTeamActions extends Fragment {
                 //Add failed shoot to the player
                 lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).makeAction(GameActions.T1FAILED, 0);
                 dialog.dismiss();
+                updateHomeTeamStats();
                 showMessage(v, "1 point shot failed by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -223,6 +228,7 @@ public class GameHomeTeamActions extends Fragment {
                 //Add failed shoot to the player
                 lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).makeAction(GameActions.T2FAILED, 0);
                 dialog.dismiss();
+                updateHomeTeamStats();
                 showMessage(v, "2 point shot failed by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -243,6 +249,7 @@ public class GameHomeTeamActions extends Fragment {
                 //Add failed shoot to the player
                 lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).makeAction(GameActions.T3FAILED, 0);
                 dialog.dismiss();
+                updateHomeTeamStats();
                 showMessage(v, "3 point shoot failed by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -263,6 +270,7 @@ public class GameHomeTeamActions extends Fragment {
                 //Add offensive rebound to the player
                 lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).makeAction(GameActions.OFF_REBOUND, 0);
                 dialog.dismiss();
+                updateHomeTeamStats();
                 showMessage(v, "Offensive rebound by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -283,6 +291,7 @@ public class GameHomeTeamActions extends Fragment {
                 //Add defensive rebound to the player
                 lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).makeAction(GameActions.DEF_REBOUND, 0);
                 dialog.dismiss();
+                updateHomeTeamStats();
                 showMessage(v, "Defensive rebound by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
             }
         });
@@ -316,6 +325,7 @@ public class GameHomeTeamActions extends Fragment {
                         lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayerTurnover)).makeAction(GameActions.TURNOVER, 0);
                         lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).makeAction(GameActions.STEAL, 0);
                         dialog.dismiss();
+                        updateHomeTeamStats();
                         showMessage(v, "Ball loosed by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
                     }
                 });
@@ -353,6 +363,7 @@ public class GameHomeTeamActions extends Fragment {
                         lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayerBlocked)).makeAction(GameActions.BLOCK, 0);
                         lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).makeAction(GameActions.RECEIVED_BLOCK, 0);
                         dialog.dismiss();
+                        updateHomeTeamStats();
                         showMessage(v, "Ball blocked by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
                     }
                 });
@@ -391,6 +402,7 @@ public class GameHomeTeamActions extends Fragment {
                         lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayerFoul)).makeAction(GameActions.FOUL, 0);
                         lstPlayerStatsGuest.get(lstPlayersOnCourtGuest.get(whichPlayer)).makeAction(GameActions.RECEIVED_FOUL, 0);
                         dialog.dismiss();
+                        updateHomeTeamStats();
                         showMessage(v, "Foul number " + String.valueOf(lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getCommittedFouls()) + " by " + lstPlayerStatsHome.get(lstPlayersOnCourtHome.get(whichPlayer)).getPlayerName() + "(Home)");
                     }
                 });

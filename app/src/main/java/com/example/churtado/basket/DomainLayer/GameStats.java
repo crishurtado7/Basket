@@ -1,5 +1,7 @@
 package com.example.churtado.basket.DomainLayer;
 
+import com.example.churtado.basket.Adapters.StatsTableAdapter;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -10,6 +12,9 @@ import java.util.Date;
  */
 public class GameStats {
     //region VARIABLES
+    private StatsTableAdapter statsHomeTableAdapter;
+    private StatsTableAdapter statsGuestTableAdapter;
+
     private String teamHome;
     private String teamGuest;
     private Date gameDate;
@@ -28,8 +33,34 @@ public class GameStats {
     private List<Integer> lstPlayersOnCourtHome;
     private List<Integer> lstPlayersOnCourtGuest;
 
+    private long millisPlayed;
+
     private static final GameStats gameStats = new GameStats();
     public static GameStats getInstance() {return gameStats;}
+
+    public long getMillisPlayed() {
+        return millisPlayed;
+    }
+
+    public void setMillisPlayed(long millisPlayed) {
+        this.millisPlayed = millisPlayed;
+    }
+
+    public StatsTableAdapter getStatsHomeTableAdapter() {
+        return statsHomeTableAdapter;
+    }
+
+    public void setStatsHomeTableAdapter(StatsTableAdapter statsTableAdapter) {
+        this.statsHomeTableAdapter = statsTableAdapter;
+    }
+
+    public StatsTableAdapter getStatsGuestTableAdapter() {
+        return statsGuestTableAdapter;
+    }
+
+    public void setStatsGuestTableAdapter(StatsTableAdapter statsTableAdapter) {
+        this.statsGuestTableAdapter = statsTableAdapter;
+    }
 
     public List<Integer> getLstPlayersOnCourtHome() {
         return lstPlayersOnCourtHome;
@@ -148,6 +179,7 @@ public class GameStats {
         this.minutesPerExtraTime = minutesPerExtraTime;
         this.lstPlayerStatsHome = lstPlayerStatsHome;
         this.lstPlayerStatsGuest = lstPlayerStatsGuest;
+        this.millisPlayed = 0;
     }
 
     private Date getCurrentDate() {

@@ -20,7 +20,7 @@ import java.util.List;
  * Created by churtado on 16/12/2014.
  */
 public class StatsFragment extends Fragment {
-    private FragmentTabHost tabHost;
+    FragmentTabHost tabHost;
 
     public StatsFragment() {
 
